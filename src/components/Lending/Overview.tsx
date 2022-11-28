@@ -8,6 +8,7 @@ const Overview = () => {
       <Flex
         mt={5}
         border='1px'
+        borderColor={"#20212E"}
         borderBottomWidth={0}
         flex={0.2}
         pl={10}
