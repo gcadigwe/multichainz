@@ -1,7 +1,10 @@
 import { Flex, Tbody, Tr, Td, Img, Text, Button } from "@chakra-ui/react";
 import BITCOIN from "../../assets/svg/bitcoin.svg";
 
-const BorrowMarket = () => {
+interface SupplyMarketModal {
+  openModal: () => void;
+}
+const BorrowMarket = ({ openModal }: SupplyMarketModal) => {
   return (
     <Tbody bgColor={"#191A28"}>
       <Tr mb={2}>
@@ -33,6 +36,7 @@ const BorrowMarket = () => {
         </Td>
         <Td border={0}>
           <Button
+            onClick={() => openModal()}
             _active={{}}
             _hover={{ backgroundColor: "none", color: "none" }}
             fontSize={"14px"}

@@ -1,7 +1,10 @@
 import { Flex, Tbody, Tr, Td, Img, Text, Button } from "@chakra-ui/react";
 import BITCOIN from "../../assets/svg/bitcoin.svg";
 
-const SupplyMarket = () => {
+interface SupplyMarketModal {
+  openModal: () => void;
+}
+const SupplyMarket = ({ openModal }: SupplyMarketModal) => {
   return (
     <Tbody bgColor={"#191A28"}>
       <Tr mb={2}>
@@ -39,6 +42,7 @@ const SupplyMarket = () => {
             fontWeight={"500"}
             bgColor={"#373848"}
             color='rgba(255, 255, 255, 0.9)'
+            onClick={() => openModal()}
           >
             Supply
           </Button>
