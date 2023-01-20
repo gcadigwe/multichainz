@@ -1,8 +1,16 @@
-import { Divider, Flex, Img, Text } from "@chakra-ui/react";
+import { Divider, Flex, Img, Text, useMediaQuery } from "@chakra-ui/react";
 import LockIcon from "../../assets/svg/lock-icon.svg";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
+import {
+  calculateTotalBorrow,
+  CalculateTotalSupply,
+  calculateTVL,
+  calculateUserBorrowedorSupplied,
+} from "../../utils/utilFunctions";
 
-const Overview = () => {
+const Overview = ({ reserveData }: any) => {
+  // CalculateTotalSupply(reserveData);
+  const [isSmallScreen] = useMediaQuery("(max-width: 1500px)");
   return (
     <>
       <Flex
@@ -11,8 +19,8 @@ const Overview = () => {
         borderColor={"#20212E"}
         borderBottomWidth={0}
         flex={0.2}
-        pl={10}
-        pr={8}
+        pl={isSmallScreen ? 5 : 10}
+        pr={isSmallScreen ? 2 : 5}
         pt={5}
         flexDirection={"column"}
       >
@@ -42,7 +50,7 @@ const Overview = () => {
               fontSize={"18px"}
             >
               {" "}
-              $4,816,275,460
+              ${calculateTVL(reserveData)}
             </Text>
             <Text fontSize={"12px"} color='#ffffff' opacity={0.7}>
               Total Value Locked
@@ -51,7 +59,7 @@ const Overview = () => {
 
           <Text fontSize={"14px"} mt={10} mb={3} color='#ffffff'>
             {" "}
-            $4,816,275,460
+            ${CalculateTotalSupply(reserveData)}
           </Text>
           <Text fontSize={"12px"} color='#ffffff' opacity={0.7}>
             Total Supply
@@ -59,10 +67,10 @@ const Overview = () => {
 
           <Text fontSize={"14px"} mt={5} mb={3} color='#ffffff'>
             {" "}
-            $4,816,275,460
+            ${calculateTotalBorrow(reserveData)}
           </Text>
           <Text mb={3} fontSize={"12px"} color='#ffffff' opacity={0.7}>
-            Total Supply
+            Total Borrow
           </Text>
         </Flex>
 
@@ -95,7 +103,7 @@ const Overview = () => {
 
           <Text mt={5} fontSize={"14px"} mb={1} color='#ffffff'>
             {" "}
-            0.00
+            ${calculateUserBorrowedorSupplied(reserveData, false)}
           </Text>
           <Text fontSize={"12px"} color='#ffffff' opacity={0.7}>
             Supply balance
@@ -103,7 +111,7 @@ const Overview = () => {
 
           <Text mt={5} fontSize={"14px"} mb={1} color='#ffffff'>
             {" "}
-            0.00
+            ${calculateUserBorrowedorSupplied(reserveData, true)}
           </Text>
           <Text fontSize={"12px"} color='#ffffff' opacity={0.7}>
             Borrow balance

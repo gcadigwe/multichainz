@@ -97,7 +97,7 @@ const Navbar = () => {
                 w='24px'
                 h='24px'
               />
-              <Text fontSize={"14px"} mx={2}>
+              <Text color='rgba(255, 255, 255, 0.9)' fontSize={"14px"} mx={2}>
                 {shortenAddress(account)}
               </Text>
               <CopyIcon />

@@ -6,16 +6,31 @@ import {
   Thead,
   Tr,
   Th,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import SupplyModal from "../Modals/SupplyModal";
 import BorrowMarket from "./BorrowMarket";
 import SupplyMarket from "./SupplyMarket";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BorrowModal from "../Modals/BorrowModal";
+import useFetchAddresses from "../../hooks/useFetchAddresses";
+import useReserveList from "../../hooks/useReserveList";
 
-const Market = () => {
+const Market = ({ setreserveData }: any) => {
   const [isOpen, setisOpen] = useState(false);
   const [isborrowModalOpen, setisborrowModalOpen] = useState(false);
+  const { addresses } = useFetchAddresses();
+  const [recheckReserve, setrecheckReserver] = useState(false);
+  const { reservesList } = useReserveList(
+    addresses?.PoolAddress,
+    recheckReserve
+  );
+  const [isSmallScreen] = useMediaQuery("(max-width: 1500px)");
+  console.log(addresses);
+
+  useEffect(() => {
+    setreserveData(reservesList);
+  }, [reservesList]);
   return (
     <>
       <Flex flex='1' pl={5} pr={5} mt={10}>
@@ -23,8 +38,8 @@ const Market = () => {
           <Text color='#fff' fontWeight={"bold"}>
             Supply Market
           </Text>
-          <TableContainer mt={5}>
-            <Table w='100%' variant='simple'>
+          <TableContainer maxHeight={"800px"} overflowY={"scroll"} mt={5}>
+            <Table size={isSmallScreen ? "sm" : "md"} variant='simple'>
               <Thead border='1px solid #20212E' bgColor={"#141523"}>
                 <Tr>
                   <Th
@@ -69,9 +84,18 @@ const Market = () => {
                   </Th>
                 </Tr>
               </Thead>
+              {reservesList?.map((reserve: any, i: any) => (
+                <SupplyMarket
+                  reserves={reserve}
+                  key={i}
+                  openModal={() => setisOpen(true)}
+                  poolAddress={addresses?.PoolAddress}
+                  setrecheckReserve={() => setrecheckReserver(!recheckReserve)}
+                />
+              ))}
+              {/* <SupplyMarket openModal={() => setisOpen(true)} />
               <SupplyMarket openModal={() => setisOpen(true)} />
-              <SupplyMarket openModal={() => setisOpen(true)} />
-              <SupplyMarket openModal={() => setisOpen(true)} />
+              <SupplyMarket openModal={() => setisOpen(true)} /> */}
             </Table>
           </TableContainer>
         </Flex>
@@ -80,8 +104,8 @@ const Market = () => {
           <Text color='#fff' fontWeight={"bold"}>
             Borrow Market
           </Text>
-          <TableContainer mt={5}>
-            <Table variant='simple'>
+          <TableContainer maxHeight={"800px"} overflowY={"scroll"} mt={5}>
+            <Table size={isSmallScreen ? "sm" : "md"} variant='simple'>
               <Thead border='1px solid #20212E' bgColor={"#141523"}>
                 <Tr>
                   <Th
@@ -114,7 +138,7 @@ const Market = () => {
                     fontWeight={"500"}
                     textTransform={"capitalize"}
                   >
-                    Supplied
+                    Borrowed
                   </Th>
                   <Th
                     border={0}
@@ -126,18 +150,20 @@ const Market = () => {
                   </Th>
                 </Tr>
               </Thead>
-              <BorrowMarket openModal={() => setisborrowModalOpen(true)} />
-              <BorrowMarket openModal={() => setisborrowModalOpen(true)} />
-              <BorrowMarket openModal={() => setisborrowModalOpen(true)} />
+              {reservesList?.map((reserve: any, i: any) => (
+                <BorrowMarket
+                  reserves={reserve}
+                  key={i}
+                  openModal={() => setisOpen(true)}
+                  poolAddress={addresses?.PoolAddress}
+                  setrecheckReserve={() => setrecheckReserver(!recheckReserve)}
+                />
+              ))}
             </Table>
           </TableContainer>
         </Flex>
       </Flex>
-      <SupplyModal isOpen={isOpen} onClose={() => setisOpen(false)} />
-      <BorrowModal
-        isOpen={isborrowModalOpen}
-        onClose={() => setisborrowModalOpen(false)}
-      />
+      {/* <SupplyModal isOpen={isOpen} onClose={() => setisOpen(false)} /> */}
     </>
   );
 };

@@ -19,3 +19,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.BINANCETEST,
   //   SupportedChainId.ROPSTEN,
 ];
+
+export const ETHERSCAN_URL: { [key: string]: string } = {
+  "80001": "https://mumbai.polygonscan.com/tx/",
+};
