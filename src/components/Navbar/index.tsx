@@ -22,10 +22,14 @@ import WALLETCONNECT from "../../assets/svg/walletconnect.svg";
 import PORTIS from "../../assets/svg/portis.svg";
 import { ConnectorNames, connectorsByName } from "../../connectors/index";
 import { shortenAddress } from "../../utils";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setOpenModal] = useState(false);
   const { account, connector } = useWeb3React();
+  let activeStyle = {
+    fontWeight: "bold",
+  };
   return (
     <>
       <Flex alignItems={"center"} px={10} pt={5}>
@@ -37,15 +41,65 @@ const Navbar = () => {
         </Flex>
 
         <Flex ml={40}>
-          <Text mr={5} cursor={"pointer"} color='#ffffff' fontWeight={"600"}>
-            Lending
-          </Text>
+          <NavLink
+            style={({ isActive }) =>
+              isActive
+                ? {
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                  }
+                : {
+                    fontWeight: "normal",
+                    color: "rgba(255, 255, 255, 0.7)",
+                  }
+            }
+            to='/'
+          >
+            <Text mr={5} cursor={"pointer"}>
+              Lending
+            </Text>
+          </NavLink>
+
           <Text mr={5} cursor={"pointer"} color='rgba(255, 255, 255, 0.7)'>
             Market
           </Text>
-          <Text mr={5} cursor={"pointer"} color='rgba(255, 255, 255, 0.7)'>
-            Dao Governance
-          </Text>
+
+          <NavLink
+            style={({ isActive }) =>
+              isActive
+                ? {
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                  }
+                : {
+                    fontWeight: "normal",
+                    color: "rgba(255, 255, 255, 0.7)",
+                  }
+            }
+            to='/yield-farming'
+          >
+            <Text mr={5} cursor={"pointer"}>
+              Yield Farming
+            </Text>
+          </NavLink>
+          <NavLink
+            style={({ isActive }) =>
+              isActive
+                ? {
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                  }
+                : {
+                    fontWeight: "normal",
+                    color: "rgba(255, 255, 255, 0.7)",
+                  }
+            }
+            to='/dao'
+          >
+            <Text mr={5} cursor={"pointer"}>
+              Dao Governance
+            </Text>
+          </NavLink>
           <Text cursor={"pointer"} color='rgba(255, 255, 255, 0.7)'>
             Community
           </Text>

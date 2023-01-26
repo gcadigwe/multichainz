@@ -10,7 +10,7 @@ interface walletInfoType {
 
 const initialState: walletInfoType = {
   status: "",
-  display: true,
+  display: false,
   msg: "",
   title: "",
   hash: "",
