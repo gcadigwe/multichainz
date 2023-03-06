@@ -23,13 +23,16 @@ import PORTIS from "../../assets/svg/portis.svg";
 import { ConnectorNames, connectorsByName } from "../../connectors/index";
 import { shortenAddress } from "../../utils";
 import { Link, NavLink } from "react-router-dom";
+import { NETWORK_NAME, NETWORK_LOGO } from "../../utils/constants/chains";
 
 const Navbar = () => {
   const [isOpen, setOpenModal] = useState(false);
-  const { account, connector } = useWeb3React();
+  const { account, connector, chainId, error } = useWeb3React();
   let activeStyle = {
     fontWeight: "bold",
   };
+
+  console.log("error", error);
   return (
     <>
       <Flex alignItems={"center"} px={10} pt={5}>
@@ -117,20 +120,43 @@ const Navbar = () => {
                 color: "none",
               }}
               mr={5}
-              bgColor={"#58647B"}
+              bgColor={
+                error?.name === "UnsupportedChainIdError"
+                  ? "#FC8180"
+                  : "#58647B"
+              }
               as={Button}
-              rightIcon={<ChevronDownIcon color={"rgba(255, 255, 255, 0.9)"} />}
+              rightIcon={
+                error?.name === "UnsupportedChainIdError" ? (
+                  ""
+                ) : (
+                  <ChevronDownIcon color={"rgba(255, 255, 255, 0.9)"} />
+                )
+              }
             >
-              <Flex alignItems={"center"}>
-                <Img mr={1} src={ETHEREUM} w='24px' h='24px' />
-                <Text fontWeight={"500"} color='rgba(255, 255, 255, 0.9)'>
-                  Ethereum
-                </Text>
-              </Flex>
+              {error?.name === "UnsupportedChainIdError" ? (
+                <Flex alignItems={"center"}>
+                  <Text fontSize={"14px"} fontWeight={"800"} color='white'>
+                    UNSUPPORTED NETWORK
+                  </Text>
+                </Flex>
+              ) : (
+                <Flex alignItems={"center"}>
+                  <Img
+                    mr={1}
+                    src={NETWORK_LOGO[chainId as number]}
+                    w='24px'
+                    h='24px'
+                  />
+                  <Text fontWeight={"500"} color='rgba(255, 255, 255, 0.9)'>
+                    {NETWORK_NAME[chainId as number]}
+                  </Text>
+                </Flex>
+              )}
             </MenuButton>
-            <MenuList>
+            {/* <MenuList>
               <MenuItem>Polygon</MenuItem>
-            </MenuList>
+            </MenuList> */}
           </Menu>
 
           {account ? (
