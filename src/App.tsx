@@ -6,15 +6,18 @@ import TransactioModal from "./components/Modals/TransactionModal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AppRoutes, routes } from "./utils/constants/routes";
+import { useWeb3React } from "@web3-react/core";
 
 function App() {
   useConnectWallet();
+
   return (
     <Suspense fallback={null}>
       <Router>
         <Box minH={"100vh"}>
           <Navbar />
           <TransactioModal />
+
           <Routes>
             {routes.map((route: AppRoutes, index: number) => {
               const { component: Component, path, exact } = route;

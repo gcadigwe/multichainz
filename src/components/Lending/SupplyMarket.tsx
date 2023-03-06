@@ -24,7 +24,12 @@ const SupplyMarket = ({
         <Tr mb={2}>
           <Td border={0}>
             <Flex alignItems={"center"}>
-              <Img mr={2} src={BITCOIN} w='32px' h='32px' />
+              <Img
+                mr={2}
+                src={reserves?.logo ? reserves.logo : BITCOIN}
+                w='32px'
+                h='32px'
+              />
               <Flex flexDirection={"column"}>
                 <Text
                   fontSize={"14px"}

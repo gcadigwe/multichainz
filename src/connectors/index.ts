@@ -9,9 +9,9 @@ import {
 } from "../utils/constants/chains";
 
 const RPC = {
-  [SupportedChainId.BINANCE]: "https://bsc-dataseed.binance.org",
-  [SupportedChainId.BINANCETEST]:
-    "https://data-seed-prebsc-2-s3.binance.org:8545",
+  // [SupportedChainId.BINANCE]: "https://bsc-dataseed.binance.org",
+  // [SupportedChainId.BINANCETEST]:
+  //   "https://data-seed-prebsc-2-s3.binance.org:8545",
 
   [SupportedChainId.POLYGON]: `https://rpc-mainnet.maticvigil.com/`,
   [SupportedChainId.POLYGONTEST]: "https://rpc-mumbai.matic.today",
@@ -38,7 +38,7 @@ export enum ConnectorNames {
 export const injected = new InjectedConnector({
   supportedChainIds: ALL_SUPPORTED_CHAIN_IDS,
 });
-const supportedChainIds = [56, 97, 80001, 137];
+const supportedChainIds = [80001, 137];
 
 export const checkSupportedIds = (chainID: number) =>
   supportedChainIds.some((id) => id === chainID);
