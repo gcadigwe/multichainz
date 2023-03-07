@@ -174,7 +174,11 @@ const BorrowModal = ({
             <Img src={CLOSE} w='24px' h='24px' />
           </Flex>
           <Flex flexDirection={"column"} alignItems={"center"}>
-            <Img src={BITCOIN} w='30px' h='30px' />
+            <Img
+              src={reservesData?.logo ? reservesData.logo : BITCOIN}
+              w='30px'
+              h='30px'
+            />
             <Text
               fontWeight={"600"}
               fontSize={"18px"}
