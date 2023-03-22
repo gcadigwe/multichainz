@@ -7,6 +7,7 @@ import {
   Tr,
   Th,
   useMediaQuery,
+  Tbody,
 } from "@chakra-ui/react";
 import SupplyModal from "../Modals/SupplyModal";
 import BorrowMarket from "./BorrowMarket";
@@ -15,13 +16,15 @@ import { useEffect, useState } from "react";
 import BorrowModal from "../Modals/BorrowModal";
 import useFetchAddresses from "../../hooks/useFetchAddresses";
 import useReserveList from "../../hooks/useReserveList";
+import SkeletonLoader from "../Loader/Skeleton";
 
 const Market = ({ setreserveData }: any) => {
   const [isOpen, setisOpen] = useState(false);
   const [isborrowModalOpen, setisborrowModalOpen] = useState(false);
+
   const { addresses } = useFetchAddresses();
   const [recheckReserve, setrecheckReserver] = useState(false);
-  const { reservesList } = useReserveList(
+  const { reservesList, loading } = useReserveList(
     addresses?.PoolAddress,
     recheckReserve
   );
@@ -84,15 +87,28 @@ const Market = ({ setreserveData }: any) => {
                   </Th>
                 </Tr>
               </Thead>
-              {reservesList?.map((reserve: any, i: any) => (
-                <SupplyMarket
-                  reserves={reserve}
-                  key={i}
-                  openModal={() => setisOpen(true)}
-                  poolAddress={addresses?.PoolAddress}
-                  setrecheckReserve={() => setrecheckReserver(!recheckReserve)}
-                />
-              ))}
+
+              {loading
+                ? [1, 2, 3, 4, 5, 6].map(() => (
+                    <>
+                      <SkeletonLoader />
+                      <Flex mb={2} />
+                    </>
+                  ))
+                : loading === false && reservesList
+                ? reservesList?.map((reserve: any, i: any) => (
+                    <SupplyMarket
+                      reserves={reserve}
+                      key={i}
+                      openModal={() => setisOpen(true)}
+                      poolAddress={addresses?.PoolAddress}
+                      setrecheckReserve={() =>
+                        setrecheckReserver(!recheckReserve)
+                      }
+                    />
+                  ))
+                : null}
+
               {/* <SupplyMarket openModal={() => setisOpen(true)} />
               <SupplyMarket openModal={() => setisOpen(true)} />
               <SupplyMarket openModal={() => setisOpen(true)} /> */}
@@ -150,15 +166,38 @@ const Market = ({ setreserveData }: any) => {
                   </Th>
                 </Tr>
               </Thead>
-              {reservesList?.map((reserve: any, i: any) => (
-                <BorrowMarket
-                  reserves={reserve}
-                  key={i}
-                  openModal={() => setisOpen(true)}
-                  poolAddress={addresses?.PoolAddress}
-                  setrecheckReserve={() => setrecheckReserver(!recheckReserve)}
-                />
-              ))}
+              {loading
+                ? [1, 2, 3, 4, 5, 6].map(() => (
+                    <>
+                      <SkeletonLoader />
+                      <Flex mb={2} />
+                    </>
+                  ))
+                : loading === false && reservesList
+                ? reservesList?.map((reserve: any, i: any) => (
+                    <BorrowMarket
+                      reserves={reserve}
+                      key={i}
+                      openModal={() => setisOpen(true)}
+                      poolAddress={addresses?.PoolAddress}
+                      setrecheckReserve={() =>
+                        setrecheckReserver(!recheckReserve)
+                      }
+                    />
+                  ))
+                : null}
+              {/* // {loading === false &&
+              //   reservesList?.map((reserve: any, i: any) => (
+              //     <BorrowMarket
+              //       reserves={reserve}
+              //       key={i}
+              //       openModal={() => setisOpen(true)}
+              //       poolAddress={addresses?.PoolAddress}
+              //       setrecheckReserve={() =>
+              //         setrecheckReserver(!recheckReserve)
+              //       }
+              //     />
+              //   ))} */}
             </Table>
           </TableContainer>
         </Flex>

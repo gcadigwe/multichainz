@@ -35,7 +35,7 @@ const useAuth = () => {
               message: error.message,
             });
           } else {
-            window.localStorage.removeItem(connectorKey);
+            sessionStorage.removeItem(connectorKey);
             if (
               error instanceof NoEthereumProviderError ||
               error instanceof NoBscProviderError
@@ -66,11 +66,11 @@ const useAuth = () => {
 
   const logout = useCallback(() => {
     deactivate();
-    if (window.localStorage.getItem("walletconnect")) {
+    if (sessionStorage.getItem("walletconnect")) {
       connectorsByName.walletconnect.close();
       connectorsByName.walletconnect.walletConnectProvider = undefined;
     }
-    window.localStorage.removeItem(connectorKey);
+    sessionStorage.removeItem(connectorKey);
   }, [deactivate]);
 
   return { login, logout };

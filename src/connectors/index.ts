@@ -48,7 +48,7 @@ export const bscConnector = new BscConnector({
 
 export const portis = new PortisConnector({
   dAppId: process.env.REACT_APP_PORTIS_DAPP_ID as string,
-  networks: [1],
+  networks: ALL_SUPPORTED_CHAIN_IDS,
 });
 
 export const walletconnect = new WalletConnectConnector({
