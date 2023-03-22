@@ -12,7 +12,11 @@ import METAMASK from "../../assets/svg/metamask.svg";
 import BINANCE from "../../assets/svg/binance.svg";
 import WALLETCONNECT from "../../assets/svg/walletconnect.svg";
 import PORTIS from "../../assets/svg/portis.svg";
-import { ConnectorNames, connectorsByName } from "../../connectors/index";
+import {
+  connectorKey,
+  ConnectorNames,
+  connectorsByName,
+} from "../../connectors/index";
 import { useWeb3React } from "@web3-react/core";
 
 interface ConnectWalletProps {
@@ -59,6 +63,7 @@ const ConnectWallet = ({ onClose, isOpen }: ConnectWalletProps) => {
               px={3}
               onClick={() => {
                 activate(connectorsByName[ConnectorNames.Injected]);
+                sessionStorage.setItem(connectorKey, ConnectorNames.Injected);
                 onClose();
               }}
             >
@@ -82,6 +87,7 @@ const ConnectWallet = ({ onClose, isOpen }: ConnectWalletProps) => {
               px={3}
               onClick={() => {
                 activate(connectorsByName[ConnectorNames.BSC]);
+                sessionStorage.setItem(connectorKey, ConnectorNames.BSC);
                 onClose();
               }}
             >
@@ -105,6 +111,10 @@ const ConnectWallet = ({ onClose, isOpen }: ConnectWalletProps) => {
               px={3}
               onClick={() => {
                 activate(connectorsByName[ConnectorNames.WalletConnect]);
+                sessionStorage.setItem(
+                  connectorKey,
+                  ConnectorNames.WalletConnect
+                );
                 onClose();
               }}
             >
@@ -128,6 +138,7 @@ const ConnectWallet = ({ onClose, isOpen }: ConnectWalletProps) => {
               px={3}
               onClick={() => {
                 activate(connectorsByName[ConnectorNames.PORTIS]);
+                sessionStorage.setItem(connectorKey, ConnectorNames.PORTIS);
                 onClose();
               }}
             >

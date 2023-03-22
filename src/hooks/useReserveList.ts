@@ -21,6 +21,7 @@ import { ALL_SUPPORTED_CHAIN_ID_NUMBERS } from "../utils/constants/chains";
 const useReserveList = (poolAddress: any, recheckReserver: boolean) => {
   const { chainId, account, library } = useWeb3React();
   const [reservesList, setreservesList] = useState<any>();
+  const [loading, setLoading] = useState(false);
 
   console.log(
     "chainid",
@@ -31,6 +32,7 @@ const useReserveList = (poolAddress: any, recheckReserver: boolean) => {
     if (poolAddress && account) {
       try {
         if (ALL_SUPPORTED_CHAIN_ID_NUMBERS.includes(chainId as number)) {
+          setLoading(true);
           console.log("library", library);
           const multi = new MultiCall(library);
           const reserveDataInputs = [];
@@ -218,18 +220,22 @@ const useReserveList = (poolAddress: any, recheckReserver: boolean) => {
           }
 
           setreservesList(reserveList);
+          setLoading(false);
         } else {
           console.log("got here");
           setreservesList([]);
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     }
   }, [chainId, account, poolAddress, recheckReserver]);
 
   return {
     reservesList,
+    loading,
   };
 };
 

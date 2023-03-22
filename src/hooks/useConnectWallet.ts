@@ -19,10 +19,9 @@ const binanceChainListener = async () =>
 const useConnectWallet = () => {
   const { login } = useAuth();
 
-  const connectorId = window.localStorage.getItem(
-    connectorKey
-  ) as ConnectorNames;
+  const connectorId = sessionStorage.getItem(connectorKey) as ConnectorNames;
   useEffect(() => {
+    console.log("connectorId", connectorId);
     if (connectorId) {
       const isConnectorBinanceChain = connectorId === ConnectorNames.BSC;
       const isBinanceChainDefined = Reflect.has(window, "BinanceChain");

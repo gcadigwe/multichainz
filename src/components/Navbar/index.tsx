@@ -24,6 +24,7 @@ import { ConnectorNames, connectorsByName } from "../../connectors/index";
 import { shortenAddress } from "../../utils";
 import { Link, NavLink } from "react-router-dom";
 import { NETWORK_NAME, NETWORK_LOGO } from "../../utils/constants/chains";
+import AccountModal from "../Modals/AccountModal";
 
 const Navbar = () => {
   const [isOpen, setOpenModal] = useState(false);
@@ -31,6 +32,7 @@ const Navbar = () => {
   let activeStyle = {
     fontWeight: "bold",
   };
+  const [isAccountModalOpen, setAccountModalOpen] = useState(false);
 
   console.log("error", error);
   return (
@@ -111,6 +113,7 @@ const Navbar = () => {
         <Flex>
           <Menu>
             <MenuButton
+              display={account ? undefined : "none"}
               _hover={{
                 backgroundColor: "none",
                 color: "none",
@@ -154,13 +157,15 @@ const Navbar = () => {
                 </Flex>
               )}
             </MenuButton>
-            {/* <MenuList>
-              <MenuItem>Polygon</MenuItem>
-            </MenuList> */}
           </Menu>
 
           {account ? (
-            <Flex cursor={"pointer"} bgColor={"#191A28"} alignItems={"center"}>
+            <Flex
+              cursor={"pointer"}
+              onClick={() => setAccountModalOpen(true)}
+              bgColor={"#191A28"}
+              alignItems={"center"}
+            >
               <Img
                 src={
                   connector === connectorsByName[ConnectorNames.Injected]
@@ -178,9 +183,8 @@ const Navbar = () => {
                 h='24px'
               />
               <Text color='rgba(255, 255, 255, 0.9)' fontSize={"14px"} mx={2}>
-                {shortenAddress(account)}
+                {shortenAddress(account, 5)}
               </Text>
-              <CopyIcon />
             </Flex>
           ) : (
             <Flex
@@ -190,6 +194,7 @@ const Navbar = () => {
               alignItems={"center"}
               px={2}
               onClick={() => setOpenModal(true)}
+              py={2}
             >
               <Img mr={1} src={WALLET} w='24px' h='24px' />
               <Text fontWeight={"600"} color='rgba(255, 255, 255, 0.9)'>
@@ -201,6 +206,11 @@ const Navbar = () => {
       </Flex>
 
       <ConnectWallet onClose={() => setOpenModal(false)} isOpen={isOpen} />
+      <AccountModal
+        onClose={() => setAccountModalOpen(false)}
+        isOpen={isAccountModalOpen}
+        openConnectWallet={() => setOpenModal(true)}
+      />
     </>
   );
 };
