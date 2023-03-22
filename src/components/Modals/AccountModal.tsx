@@ -111,6 +111,7 @@ const AccountModal = ({
               onClick={() => {
                 deactivate();
                 sessionStorage.removeItem(connectorKey);
+                onClose();
               }}
               px={4}
               py={2}
